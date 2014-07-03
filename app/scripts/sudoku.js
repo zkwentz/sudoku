@@ -1,5 +1,10 @@
-define(function(){
+define(['utilities'],function(utilities){
   return {
+    DIFFICULTY: {
+      "easy": 50,
+      "medium": 35,
+      "hard": 20
+    },
     printBoard: function printBoard(board)
       {
         var boardString = "";
@@ -20,7 +25,7 @@ define(function(){
         boardString += "-------------\n";
         return boardString;
       },
-    generateBoard: function generateBoard()
+    generateBoard: function generateBoard(difficulty)
     {
       var n = 3;
       var board = new Array(n*n);
@@ -32,7 +37,84 @@ define(function(){
               board[i][j] = Math.floor((i*n + i/n + j) % (n*n) + 1);
             }
         }
+      board = this.shuffleBoard(board);
+      board = this.clearBoard(board, difficulty);
       return board;
+    },
+    clearBoard: function clearBoard(board, difficulty)
+    {
+      if(typeof difficulty === "string" || typeof difficulty === "undefined")
+        {
+          difficulty = this.DIFFICULTY[difficulty] || this.DIFFICULTY.easy;
+        }
+      var difficultyArray = this.difficultyArray(difficulty);
+      for (var i = 0; i < 9; i++)
+        {
+          for (var j = 0; j < 9; j++)
+            {
+              if (!utilities.contains(difficultyArray,Math.floor((i*9 + i/9 + j)+ 1)))
+                board[i][j] = "."
+            }
+        }
+      return board;
+    },
+    shuffleArray: function shuffleArray(arrayToShuffle)
+    {
+      var currentIndex = arrayToShuffle.length
+        , temporaryValue
+        , randomIndex
+        ;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = arrayToShuffle[currentIndex];
+        arrayToShuffle[currentIndex] = arrayToShuffle[randomIndex];
+        arrayToShuffle[randomIndex] = temporaryValue;
+      }
+
+      return arrayToShuffle;
+    },
+    difficultyArray: function difficultyArray(difficulty)
+    {
+      var difficultyArray = [];
+
+      for (var i = 1; i <= 81; i++) {
+         difficultyArray.push(i);
+      }
+      return this.shuffleArray(difficultyArray).slice(0,difficulty);
+    },
+    boardToString: function boardToString(board)
+    {
+      var boardString = "";
+      for (var i = 0; i < 9; i++)
+        {
+          for (var j = 0; j < 9; j++)
+            {
+              boardString += board[i][j];
+            }
+        }
+      return boardString;
+    },
+    stringToBoard: function stringToBoard(boardString)
+    {
+      var board = new Array();
+      var currentRow = new Array();
+      for (var i in boardString)
+        {
+          currentRow.push(boardString[i]);
+          if (i % 9 == 8)
+            {
+              board.push(currentRow);
+              currentRow = new Array();
+            }
+        }
+        return board;
     },
     shuffleBoard: function shuffleBoard(board)
     {
