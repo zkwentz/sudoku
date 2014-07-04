@@ -32,8 +32,10 @@ define(['utilities'],function(utilities){
         {
           for (var col = 0; col < board[row].length; col++)
             {
-              console.log(this.getSquare(row,col));
-              //boardSquares[this.getSquare(row,col)][Math.floor((9 + col) % 9)] = board[row][col];
+              var square = this.getSquare(row,col);
+              if (typeof boardSquares[square] === "undefined")
+                boardSquares[square] = new Array(9);
+              boardSquares[square][((col + row) + (row * 2)) - (square * 3)] = board[row][col];
             }
         }
       return boardSquares;
@@ -42,8 +44,6 @@ define(['utilities'],function(utilities){
     {
       var rowSection = this.getSection(row);
       var colSection = this.getSection(col);
-      console.log("ColSection: "+colSection);
-      console.log("RowSection: "+rowSection);
       return (colSection + rowSection) + (rowSection * 2);
     },
     getSection: function(rowOrCol)
