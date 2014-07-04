@@ -3,6 +3,7 @@ requirejs.config({
         app: "app",
         utilities: "utilities",
         sudoku: "sudoku",
+        templates: "templates",
         underscore: "../../bower_components/underscore/underscore",
         jquery: "../../bower_components/jquery/dist/jquery"
     },
@@ -11,6 +12,6 @@ requirejs.config({
     ]
 });
 
-require(['jquery','underscore','sudoku'],function($,_,sudoku){
-  console.log(sudoku.printBoard(sudoku.generateBoard("easy")));
+require(['jquery','underscore','sudoku','templates'],function($,_,sudoku,templates){
+  $('#sudokuBoard').html(sudoku.init());
 });

@@ -1,9 +1,20 @@
-define(['utilities'],function(utilities){
+define(['jquery','underscore','utilities','templates'],function($,_,utilities,templates){
   return {
     DIFFICULTY: {
       "easy": 50,
       "medium": 35,
       "hard": 20
+    },
+    defaults: {
+      difficulty: "easy",
+      html: true
+    },
+    init: function(options)
+    {
+      var options = $.extend(options,this.defaults);
+      var board = this.generateBoard(options.difficulty);
+      if (options.html)
+        return this.boardToHtml(board);
     },
     printBoard: function printBoard(board)
       {
@@ -33,20 +44,20 @@ define(['utilities'],function(utilities){
           for (var col = 0; col < board[row].length; col++)
             {
               var square = this.getSquare(row,col);
-              if (typeof boardSquares[square] === "undefined")
+              if (_.isUndefined(boardSquares[square]))
                 boardSquares[square] = new Array(9);
               boardSquares[square][((col + row) + (row * 2)) - (square * 3)] = board[row][col];
             }
         }
       return boardSquares;
     },
-    getSquare: function(row, col)
+    getSquare: function getSquare(row, col)
     {
       var rowSection = this.getSection(row);
       var colSection = this.getSection(col);
       return (colSection + rowSection) + (rowSection * 2);
     },
-    getSection: function(rowOrCol)
+    getSection: function getSection(rowOrCol)
     {
       if (rowOrCol < 3)
         return 0;
@@ -54,6 +65,11 @@ define(['utilities'],function(utilities){
         return 2;
       else
         return 1;
+    },
+    boardToHtml: function boardToHtml(board)
+    {
+      var boardSquares = this.getSquares(board);
+      return templates.sudokuBoard({"squares":boardSquares});
     },
     generateBoard: function generateBoard(difficulty)
     {
@@ -68,7 +84,6 @@ define(['utilities'],function(utilities){
             }
         }
       board = this.shuffleBoard(board);
-      console.log(this.getSquares(board));
       board = this.clearBoard(board, difficulty);
       return board;
     },
