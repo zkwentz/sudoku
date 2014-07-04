@@ -32,16 +32,19 @@ define(['utilities'],function(utilities){
         {
           for (var col = 0; col < board[row].length; col++)
             {
-              boardSquares[this.getSquare(row,col)] = board[row][col];
+              console.log(this.getSquare(row,col));
+              //boardSquares[this.getSquare(row,col)][Math.floor((9 + col) % 9)] = board[row][col];
             }
         }
       return boardSquares;
     },
     getSquare: function(row, col)
     {
-      var row = this.getSection(row);
-      var col = this.getSection(col);
-      return (row + col) + row;
+      var rowSection = this.getSection(row);
+      var colSection = this.getSection(col);
+      console.log("ColSection: "+colSection);
+      console.log("RowSection: "+rowSection);
+      return (colSection + rowSection) + (rowSection * 2);
     },
     getSection: function(rowOrCol)
     {
