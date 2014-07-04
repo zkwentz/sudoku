@@ -6,7 +6,7 @@ define(['jquery','underscore','utilities','templates'],function($,_,utilities,te
       "hard": 20
     },
     defaults: {
-      difficulty: "easy",
+      difficulty: "hard",
       html: true
     },
     init: function(options)
@@ -16,26 +16,6 @@ define(['jquery','underscore','utilities','templates'],function($,_,utilities,te
       if (options.html)
         return this.boardToHtml(board);
     },
-    printBoard: function printBoard(board)
-      {
-        var boardString = "";
-        for (var i = 0; i < board.length; i++)
-          {
-            if (i % 3 == 0 || i == 0)
-              boardString += "-------------\n";
-            var rowString = "";
-            for (var j = 0; j < board[i].length; j++)
-              {
-                if (j % 3 == 0 || j == 0)
-                  rowString += "|";
-                rowString += board[i][j];
-              }
-            rowString += "|";
-            boardString += rowString + "\n";
-          }
-        boardString += "-------------\n";
-        return boardString;
-      },
     getSquares: function getSquares(board)
     {
       var boardSquares = new Array(9);
@@ -99,7 +79,7 @@ define(['jquery','underscore','utilities','templates'],function($,_,utilities,te
           for (var j = 0; j < 9; j++)
             {
               if (!utilities.contains(difficultyArray,Math.floor((i*9 + i/9 + j)+ 1)))
-                board[i][j] = "."
+                board[i][j] = "&nbsp;";
             }
         }
       return board;
