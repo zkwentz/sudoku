@@ -10,16 +10,29 @@ html {
     -webkit-font-smoothing: antialiased;
 }
 
+body {
+  background-size: cover;
+  background-image: url('/images/wood.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+}
+
 $lightGridColor: #dcdbdb;
+$darkGridColor: #b4b3b3;
 
 #sudokuBoard {
-  margin: 0 auto;
+
+  margin: 90px auto;
+  background-color: #FFF;
   font-family: "Source Sans Pro", sans-serif;
   color: #d0bab2;
   font-size: 30px;
   font-size: 3rem;
   width: 600px;
   height: 600px;
+  
   .sudoku-board {
 
     height: 100%;
@@ -29,6 +42,11 @@ $lightGridColor: #dcdbdb;
       min-height: 11.11%;
       height: 11.11%;
       border-top: 1px solid $lightGridColor;
+
+      &:nth-child(3n+4)
+      {
+        border-top: 1px solid $darkGridColor;
+      }
 
       &:last-child {
         border-bottom: 1px solid $lightGridColor;
@@ -49,6 +67,19 @@ $lightGridColor: #dcdbdb;
         width: 11.11%;
         float: left;
         border-left: 1px solid $lightGridColor;
+
+        &.empty {
+
+            &:hover {
+              background-color: #fbf3f0;
+              cursor: pointer;
+            }
+
+        }
+
+        &:nth-child(3n+4) {
+          border-left: 1px solid $darkGridColor;
+        }
 
         &:last-child {
           border-right: 1px solid $lightGridColor;

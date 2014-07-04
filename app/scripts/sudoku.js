@@ -79,7 +79,7 @@ define(['jquery','underscore','utilities','templates'],function($,_,utilities,te
           for (var j = 0; j < 9; j++)
             {
               if (!utilities.contains(difficultyArray,Math.floor((i*9 + i/9 + j)+ 1)))
-                board[i][j] = "&nbsp;";
+                board[i][j] = "";
             }
         }
       return board;

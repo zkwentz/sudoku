@@ -5,7 +5,7 @@ define(['underscore'],function(_){
         "<% _.each(squares,function(square, index) { %>"+
           "<div class='sudoku-row'>"+
             "<% _.each(square, function(square_value) { %>"+
-              "<div class='sudoku-square'>"+
+              "<div class='sudoku-square <% if (square_value == '') { %>empty<% } %>'>"+
                 "<%= square_value %>"+
               "</div>"+
             "<% }) %>"+
