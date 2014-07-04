@@ -25,6 +25,33 @@ define(['utilities'],function(utilities){
         boardString += "-------------\n";
         return boardString;
       },
+    getSquares: function getSquares(board)
+    {
+      var boardSquares = new Array(9);
+      for (var row = 0; row < board.length; row++)
+        {
+          for (var col = 0; col < board[row].length; col++)
+            {
+              boardSquares[this.getSquare(row,col)] = board[row][col];
+            }
+        }
+      return boardSquares;
+    },
+    getSquare: function(row, col)
+    {
+      var row = this.getSection(row);
+      var col = this.getSection(col);
+      return (row + col) + row;
+    },
+    getSection: function(rowOrCol)
+    {
+      if (rowOrCol < 3)
+        return 0;
+      else if (rowOrCol > 5)
+        return 2;
+      else
+        return 1;
+    },
     generateBoard: function generateBoard(difficulty)
     {
       var n = 3;
@@ -38,6 +65,7 @@ define(['utilities'],function(utilities){
             }
         }
       board = this.shuffleBoard(board);
+      console.log(this.getSquares(board));
       board = this.clearBoard(board, difficulty);
       return board;
     },

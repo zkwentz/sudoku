@@ -225,7 +225,7 @@ module.exports = function (grunt) {
             rjsConfig: '<%= config.app %>/scripts/main.js',
             baseUrl: "/",
             options: {
-              exclude: ['modernizr','jquery','requirejs']
+              exclude: ['modernizr','requirejs']
             }
           }
         },
