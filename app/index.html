@@ -16,9 +16,20 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <div class="sudoku-wrapper">
+          <div class="sudoku-header">
+            <ul class="game-controls">
+              <li class="control"><a href="#" id="newGame">New Game</a></li>
+              <li class="control"><a href="#" id="pauseGame">Pause</a></li>
+              <li class="control"><a href="#" id="restartGame">Restart</a></li>
+            </ul>
+          </div>
+          <div id="sudokuBoard" class="sudoku-body">
 
-        <div id="sudokuBoard">
-
+          </div>
+          <div class="sudoku-footer">
+            <p>Current Difficulty: Easy</p>
+          </div>
         </div>
 
         <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>

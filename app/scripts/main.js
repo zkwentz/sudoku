@@ -37,9 +37,20 @@ require(['jquery','underscore','sudoku','templates'],function($,_,sudoku,templat
                $(this).html("");
              return;
     }
-    // Ensure that it is a number and stop the keypress
-    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+    // Ensure that it is a number and stop the keypress (1-9)
+    if ((e.shiftKey || (e.keyCode < 49 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
         e.preventDefault();
     }
+  })
+  .on('click touch','#pauseGame:not(.is-paused)',function(e){
+    $('#sudokuBoard, #pauseGame').addClass('is-paused');
+  })
+  .on('click touch','#pauseGame.is-paused',function(e){
+    $('#sudokuBoard, #pauseGame').removeClass('is-paused');
+  });
+
+  $('.is-paused').on('click','.empty',function(e){
+    console.log('empty click');
+    e.preventDefault();
   });
 });
