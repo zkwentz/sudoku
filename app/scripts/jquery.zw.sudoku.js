@@ -29,10 +29,22 @@ define(['jquery','templates'],function($,templates){
         base.solvedBoard = base.shuffleBoard(base.generateBoard());
         base.clearedBoard = base.clearBoard(base.solvedBoard, difficulty);
         base.$el.html(base.boardToHtml(base.clearedBoard));
+        base.startTimer();
+        base.workingBoard = base.clearedBoard;
         base.options.onNew();
       }
 
+      /* Timed games */
+      base.startTimer = function startTimer() {
+
+      }
+
+      base.pauseTimer = function pauseTimer() {
+
+      }
+
       base.pauseGame = function pauseGame() {
+        base.pauseTimer();
         base.options.onPause();
       }
 
@@ -41,10 +53,10 @@ define(['jquery','templates'],function($,templates){
         base.options.onRestart();
       }
 
-      base.solveGame = function solveGame() {
+      base.checkGame = function checkGame() {
+        base.$el.html(base.boardToHtml(base.workingBoard));
         // TODO: Add some difference function between solved and current board
-        base.$el.html(base.boardToHtml(base.solvedBoard));
-        base.options.onSolve();
+        base.options.onCheck();
       }
 
       base.generateBoard = function generateBoard() {
@@ -63,6 +75,8 @@ define(['jquery','templates'],function($,templates){
 
       base.shuffleBoard = function shuffleBoard(board)
       {
+        // TODO: This generates an obvious pattern with an offset,
+        //       a better shuffle is needed.
         var shuffledBoard = board;
         for (var times = 0; times < 50; times++)
           {
@@ -141,14 +155,19 @@ define(['jquery','templates'],function($,templates){
         // TODO: Keep track of user input in matrix for solve comparison
         base.$el.on('input','.sudoku-square',function(e){
           var $this = $(this);
+          $this.removeClass('has-error');
           var $enteredValue = $this.html();
           if ($enteredValue.length > 1)
             {
               //shake box
             }
-          $this.html($enteredValue.slice(0,1));
+          var cleanedInput = $enteredValue.slice(0,1);
+          base.workingBoard[$this.data('row')][$this.data('column')] = parseInt(cleanedInput);
+          $this.html(cleanedInput);
         })
         .on('keydown','.sudoku-square',function(e){
+          var $this = $(this);
+          $this.removeClass('has-error');
           // Allow: backspace, delete, tab, escape, enter and .
           if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                // Allow: Ctrl+A
@@ -158,7 +177,10 @@ define(['jquery','templates'],function($,templates){
                    // let it happen, don't do anything
 
                    if (e.keyCode === 8)
+                   {
                      $(this).html("");
+                     base.workingBoard[$this.data('row')][$this.data('column')] = "";
+                   }
                    return;
           }
           // Ensure that it is a number and stop the keypress (1-9)
@@ -168,10 +190,10 @@ define(['jquery','templates'],function($,templates){
         });
       }
 
-      base.boardToHtml = function boardToHtml(board)
+      base.boardToHtml = function boardToHtml(currentBoard)
       {
         //var boardSquares = getSquares(board);
-        return templates.sudokuBoard({"squares":board});
+        return templates.sudokuBoard({"rows":currentBoard, "solution":base.solvedBoard});
       };
 
       base.subscribeToEvents = function subscribeToEvents() {
@@ -184,8 +206,8 @@ define(['jquery','templates'],function($,templates){
         base.$el.bind('restart', function(e) {
           base.restartGame();
         });
-        base.$el.bind('solve', function( e ) {
-          base.solveGame();
+        base.$el.bind('check', function(e) {
+          base.checkGame();
         });
       }
 
@@ -205,7 +227,7 @@ define(['jquery','templates'],function($,templates){
       onNew: function() {},
       onPause: function() {},
       onRestart: function() {},
-      onSolve: function() {}
+      onCheck: function() {}
   };
 
   $.fn.zw_sudoku = function

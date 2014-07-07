@@ -129,6 +129,10 @@ $darkGrayColor: #b4b3b3;
                 cursor: pointer;
               }
 
+              &.has-error {
+                color: orangered;
+              }
+
           }
 
           &:nth-child(3n+4) {

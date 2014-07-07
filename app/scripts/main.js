@@ -34,7 +34,7 @@ require(['jquery','underscore','jquery.zw.sudoku','templates'],function($,_,sudo
       onRestart: function() {
         console.log('restarted');
       },
-      onSolve: function() {
+      onCheck: function() {
         console.log('solved');
       }
     });
@@ -51,8 +51,8 @@ require(['jquery','underscore','jquery.zw.sudoku','templates'],function($,_,sudo
   .on('click','#restartGame',function(e){
     $sudokuBoard.trigger('restart');
   })
-  .on('click','#solveGame',function(e){
-    $sudokuBoard.trigger('solve');
+  .on('click','#checkGame',function(e){
+    $sudokuBoard.trigger('check');
   })
 
   $('.is-paused').on('click','.empty',function(e){
