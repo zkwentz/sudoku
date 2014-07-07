@@ -17,6 +17,7 @@ body {
   background-repeat: no-repeat;
   margin: 0;
   padding: 0;
+  perspective: 1000;
 }
 
 $blackColor: #6d6d6d;
@@ -141,4 +142,32 @@ $darkGrayColor: #b4b3b3;
       }
     }
   }
+}
+
+
+/* Flippable Styles */
+.flippable {
+
+  transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+
+  &.is-flipped {
+    transform: rotateY(180deg);
+  }
+
+  .front, .back {
+
+  	backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .front {
+  	z-index: 2;
+  }
+
+  .back {
+  	transform: rotateY(180deg);
+  }
+
 }

@@ -13,8 +13,6 @@ requirejs.config({
 });
 
 require(['jquery','underscore','sudoku','templates'],function($,_,sudoku,templates){
-  $('#sudokuBoard').html(sudoku.init());
-
   $(document).on('input','.sudoku-square',function(e){
     var $this = $(this);
     var $enteredValue = $this.html();
@@ -43,14 +41,26 @@ require(['jquery','underscore','sudoku','templates'],function($,_,sudoku,templat
     }
   })
   .on('click touch','#pauseGame:not(.is-paused)',function(e){
-    $('#sudokuBoard, #pauseGame').addClass('is-paused');
+    $('.flippable').removeClass('is-flipped');
   })
-  .on('click touch','#pauseGame.is-paused',function(e){
-    $('#sudokuBoard, #pauseGame').removeClass('is-paused');
+  .on('click touch','.difficulty-option',function(e){
+    var $this       = $(this),
+        difficulty  = $this.data('difficulty');
+    $('#sudokuBoard').sudoku({
+      difficulty: difficulty,
+      onComplete: function(board) {
+        $('#difficultyLabel').html(difficulty);
+        $('.flippable').addClass('is-flipped');
+      }
+    });
+  })
+  .on('click touch','#newGame',function(e){
+    var $this = $(this);
+    $('.flippable').removeClass('is-flipped');
+    //kill current sudoku board
   });
 
   $('.is-paused').on('click','.empty',function(e){
-    console.log('empty click');
     e.preventDefault();
   });
 });

@@ -16,19 +16,27 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="sudoku-wrapper">
-          <div class="sudoku-header">
-            <ul class="game-controls">
-              <li class="control"><a href="#" id="newGame">New Game</a></li>
-              <li class="control"><a href="#" id="pauseGame">Pause</a></li>
-              <li class="control"><a href="#" id="restartGame">Restart</a></li>
-            </ul>
+        <div class="flippable">
+          <div class="front">
+              <a class="button difficulty-option" href="#" data-difficulty="easy">Easy</a>
+              <a class="button difficulty-option" href="#" data-difficulty="medium">Medium</a>
+              <a class="button difficulty-option" href="#" data-difficulty="hard">Hard</a>
           </div>
-          <div id="sudokuBoard" class="sudoku-body">
-
-          </div>
-          <div class="sudoku-footer">
-            <p>Current Difficulty: Easy</p>
+          <div class="back">
+            <div class="sudoku-wrapper">
+              <div class="sudoku-header">
+                <ul class="game-controls">
+                  <li class="control"><a href="#" id="newGame">New Game</a></li>
+                  <li class="control"><a href="#" id="pauseGame">Pause</a></li>
+                  <li class="control"><a href="#" id="restartGame">Restart</a></li>
+                </ul>
+              </div>
+              <div class="sudoku-body" id='sudokuBoard'>
+              </div>
+              <div class="sudoku-footer">
+                <p>Current Difficulty: <span id="difficultyLabel"></span></p>
+              </div>
+            </div>
           </div>
         </div>
 
